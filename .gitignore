@@ -1,0 +1,15 @@
+# Angular frontend
+Book-ui-app/node_modules/
+Book-ui-app/dist/
+Book-ui-app/.angular/
+
+# ASP.NET Core backend
+BookApi/bin/
+BookApi/obj/
+BookApi/*.vs
+BookApi/*.user
+BookApi/*.suo
+BookApi/.vscode/
+
+# Environment files
+.env
