@@ -1,0 +1,123 @@
+<div class="container-fluid">
+  <div class="row navbar">
+    <div class="col-6">
+      <h3>Book List</h3>
+    </div>
+    <div class="col-6 text-end">
+      <button class="button" (click)="openModal()">Add Book</button>
+    </div>
+  </div>
+  @if (bookList && bookList.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>PublicationDate</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of bookList; track $index) {
+          <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.author }}</td>
+            <td>{{ item.isbn }}</td>
+            <td>{{ item.publicationDate | date: "dd-MM-YYYY" }}</td>
+            <td class="text-center">
+              <button class="btn btn-primary" (click)="onEdit(item)">
+                Edit
+              </button>
+              ||
+              <button class="btn btn-danger" (click)="onDelete(item)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <h5 class="text-center p-5">Book Not Found</h5>
+  }
+</div>
+
+<!-- Modal -->
+<div class="modal" id="myModel" #myModal>
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    @if (bookForm.value.id != 0) {
+      <h3>Update Book</h3>
+    } @else {
+      <h3>Add Book</h3>
+    }
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <input
+              type="text"
+              name="title"
+              formControlName="title"
+              class="form-control"
+              placeholder="Enter Book Title"
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <input
+              type="text"
+              name="author"
+              formControlName="author"
+              class="form-control"
+              placeholder="Enter Author Name"
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <input
+              type="text"
+              name="isbn"
+              formControlName="isbn"
+              class="form-control"
+              placeholder="Enter ISBN Number"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <label>Publication Date</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="publicationDate"
+              />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 text-end">
+              <button
+                type="submit"
+                class="btn me-2"
+                [ngClass]="
+                  bookForm.value.id === 0 ? 'btn-primary' : 'btn-success'
+                "
+                [disabled]="bookForm.invalid"
+              >
+                {{ bookForm.value.id === 0 ? "Save" : "Update" }}
+              </button>
+
+              <button class="btn btn-danger" (click)="closeModal()">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
